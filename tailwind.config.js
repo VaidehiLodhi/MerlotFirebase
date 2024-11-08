@@ -13,7 +13,7 @@ module.exports = {
 			customPurple: '#DC97F7',
 			customViolet: '#C69CFC',
 			customRed: '#D0988A',
-			customWhite: '#F5F5F5',
+			customWhite: '#F6F2E6',
   			background: 'hsl(var(--background))',
   			foreground: 'hsl(var(--foreground))',
   			card: {

@@ -24,6 +24,7 @@ export const DeletePostButton =({postId, onPostDeleted,})=> {
     return (
         <div>
             <Button
+            className="relative right-0"
             variant="destructive"
             onClick={handleDelete}
             disabled={isDeleting}

@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { Textarea } from "@/components/ui/textarea"; 
 import { db } from "@/config/firebase";
-import { doc, updateDoc } from "firebase/firestore";
+import { doc, serverTimestamp, updateDoc } from "firebase/firestore";
 
 export const PostBox = ({ postId, data, onPostUpdated}) => {
   const [isEditing, setIsEditing] = useState(true);
@@ -16,7 +16,10 @@ export const PostBox = ({ postId, data, onPostUpdated}) => {
     setIsUpdating(true);
     try {
         const postDoc = doc(db, "posts", postId);
-        await updateDoc(postDoc, {content});
+        await updateDoc(postDoc, {
+            content,
+            updatedAt: serverTimestamp(),
+        });
         onPostUpdated();
         disableEditing();
     } catch (err) {
@@ -24,8 +27,14 @@ export const PostBox = ({ postId, data, onPostUpdated}) => {
     } finally {
         setIsUpdating(false);
     }
-
   }
+
+  const formatTimestamp = (timestamp) => {
+    if (!timestamp) return "N/A";
+    const date = timestamp.toDate ? timestamp.toDate() : new Date(timestamp.seconds * 1000);
+    return date.toLocaleString(); 
+};
+
 
   const textareaRef = useRef(null);
   const formRef = useRef(null);
@@ -42,9 +51,12 @@ export const PostBox = ({ postId, data, onPostUpdated}) => {
         onChange={(e) => setContent(e.target.value)} 
         id="postbox"
         disabled={isUpdating}
-        className="resize-none focus-visible:ring-0 focus-visible:ring-offset-0 ring-0 focus:ring-0 outline-none shadow-sm"
+        className="resize-none h-40 focus-visible:ring-0 focus-visible:ring-offset-0 ring-0 focus:ring-0 outline-none shadow-sm"
       />
-      <div className="flex items-center gap-x-2">
+      <p className="text-sm text-gray-500">
+        Last updated: {formatTimestamp(data.updatedAt)}
+      </p>
+      <div className="flex items-center absolute right-6 bottom-5 gap-x-2">
         <Button 
         disabled ={isUpdating}
         type="submit">

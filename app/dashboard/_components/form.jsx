@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { auth, db } from "@/config/firebase";
 import { collection, getDocs, addDoc } from "firebase/firestore";
 import { useEffect, useState, useCallback } from "react";
+import { toast } from "sonner";
 
 export const DashboardForm = () => {
     const [posts, setPosts] = useState([]);
@@ -35,7 +36,7 @@ export const DashboardForm = () => {
     const onSubmitForm = async (e) => {
         e.preventDefault();
         if (!newText.trim()) {
-            alert("Post content cannot be empty!");
+            toast.error("Post Content cant be empty! Put some magic!")
             return;
         }
 
@@ -47,6 +48,7 @@ export const DashboardForm = () => {
                 likes : [],
             });
             setNewText(""); 
+            toast.success("Post created successfully..")
             getPosts(); 
         } catch (err) {
             console.error("Error adding post:", err);
@@ -63,7 +65,7 @@ export const DashboardForm = () => {
             <form className="flex flex-col w-full h-full items-center justify-center " onSubmit={onSubmitForm}>
                 <Textarea
                     className="resize-none w-full focus-visible:ring-0 focus-visible:ring-offset-0 ring-0 focus:ring-0 outline-none shadow-sm"
-                    placeholder="Get creative, sip a tea, and write..."
+                    placeholder="Get creative, sip a tea, and ink that thought..."
                     type="text"
                     name="textarea"
                     value={newText}
