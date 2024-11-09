@@ -9,6 +9,9 @@ import { Dialog, DialogContent, DialogTrigger, DialogClose } from "@/components/
 import { DeletePostButton } from "./delete-post";
 import { useAuth } from "@/hooks/useAuth";
 import { LikedPostButton } from "./liked-post";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient";
+import { Grape,} from "lucide-react";
 
 export const DisplayPosts = () => {
   const [selectedPost, setSelectedPost] = useState(null); 
@@ -48,21 +51,39 @@ export const DisplayPosts = () => {
   };
 
   return (
-    <div>
-      <BentoGrid className="max-w-4xl mx-auto md:auto-rows-[10rem]">
+      <div className="grid grid-cols-3 md:grid-cols-4 gap-4 p-4">
           {postList.map((post) => (
             <div key={post.id}>
-            <div className="">
+            <div>
               <Dialog 
                 key={post.id}
                 open={selectedPost?.id === post.id}
                 onOpenChange={(isOpen) => isOpen ? setSelectedPost(post) : setSelectedPost(null)}>
-                <DialogTrigger>
-                  <BentoGridItem
-                    description={post.content}
-                    className="cursor-pointer"
-                  />
-                </DialogTrigger>
+                  <Card className="w-full h-full flex flex-col bg-customViolet border-none">
+                    <CardHeader>
+                      <HoverBorderGradient>
+                        <div className="flex items-center justify-center">
+                          {post.title}
+                          <Grape className=" ml-2 h-5 w-5"/>
+                        </div>
+                      </HoverBorderGradient>
+                    </CardHeader>
+                    <CardContent className="flex-1 flex-col space-y-2 ">
+                            <DialogTrigger className="w-full">
+                              <div className="w-32 h-32">
+                                <p className="text-center overflow-hidden text-ellipsis whitespace-nowrap max-w-200px]">
+                                    {post.content}
+                                </p>
+                              </div>
+                            </DialogTrigger>
+                              <LikedPostButton
+                              postId={post.id}
+                              initialLikes={post.initialLikes || []}
+                              currentUserId={currentUser?.uid}
+                              />
+                    </CardContent>
+                  </Card>
+                
                 <DialogContent>
                   {selectedPost?.id === post.id && (
                     <>
@@ -80,15 +101,9 @@ export const DisplayPosts = () => {
                   )}
                 </DialogContent>
               </Dialog>
-              <LikedPostButton
-                postId={post.id}
-                initialLikes={post.likes || []}
-                currentUserId={currentUser?.uid}
-              />
             </div>
             </div>
         ))}  
-      </BentoGrid>
-    </div>
+      </div>
   );
 };

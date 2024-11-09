@@ -21,7 +21,7 @@ export const Navbar =()=> {
     return (
         <div className="z-50 fixed top-0 w-full h-20 px-4 shadow-sm shadow-white/20 flex items-center bg-customBlack">
             <div className="md:max-w-screen-2xl mx-auto w-full flex items-center justify-between">
-                <p className="text-xl text-customViolet px-5">Merlot</p>
+                <p className="text-2xl font-bold text-customViolet px-5">Merlot</p>
                 <div className="flex items-center justify-center gap-x-2 bg-white/40 rounded-full px-5 w-[50%] py-2">
                     <Button
                         variant="ghost"
@@ -38,7 +38,7 @@ export const Navbar =()=> {
                         Feed
                     </Button>
                 </div>
-                <div className=" px-5 space-x-4 md:block md:w-auto w-full flex items-center justify-between">
+                <div className=" px-5  md:block md:w-auto">
                     <Button onClick={()=>Logout()} size="sm" variant="" className="border bg-customViolet/30 border-neutral-500 text-neutral-300 font-semibold">
                         Logout
                     </Button>

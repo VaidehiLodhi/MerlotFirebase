@@ -51,7 +51,7 @@ const DashboardPage = ({ params }) => {
   const user = auth.currentUser;
 
   return (
-    <div className="flex flex-col">
+    <div className="flex flex-col w-full h-full bg-customBlack">
         <div className="flex items-start w-full z-20 py-5 px-6 shadow-sm bg-customBlack">
             <div className="pt-20">
                 {userData ? (
@@ -61,8 +61,9 @@ const DashboardPage = ({ params }) => {
                             <Avatar>
                             <AvatarImage
                                 alt="Profile"
-                                className="w-16 h-16 rounded-full object-cover"
+                                className="w-full h-auto rounded-full object-cover"
                                 src={user?.photoURL}
+                                fill
                                 />
                             <AvatarFallback className="bg-customWhite/80">{user?.displayName?.charAt(0)}</AvatarFallback>
                             </Avatar>

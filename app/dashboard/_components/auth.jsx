@@ -3,9 +3,23 @@
 import { Button } from "@/components/ui/button"
 import { auth, googleProvider } from "@/config/firebase"
 import { useAuth } from "@/hooks/useAuth"
+import { cn } from "@/lib/utils"
 import { signInWithPopup} from "firebase/auth"
 import { useRouter } from "next/navigation"
 import { useEffect, useState } from "react"
+import {Inter} from "next/font/google";
+import localFont from "next/font/local"
+import { HoverBorderGradient } from "@/components/ui/hover-border-gradient"
+import Link from "next/link"
+
+const headingFont = localFont({
+  src: "../../fonts/Sentient-Regular.woff",
+})
+
+const inter = Inter({
+  subsets: ['latin'], 
+  weight: ['400', '700'],
+});
 
 export const Auth =()=> {
 
@@ -31,21 +45,36 @@ export const Auth =()=> {
     }
 
     return (
-        <div className="h-full w-full flex items-center justify-center flex-col">
-            <div className="h-[300px] w-[350px] bg-gradient-to-b from-purple-400 to-purple-900 p-3 shadow-sm rounded-md border flex flex-col justify-around space-y-3">
-                <div className="space-y-5">
-                    <p className="pt-4 text-base font-medium text-white text-center">
-                        Merlot, allows you to connect with writers,
-                        and enjoy the love for reading, together.
-                    </p>
-                    <p className="text-lg uppercase font-semibold text-white text-center ">
-                        Redefining, Social Media
-                    </p>
-                </div>
-                <Button size="lg" className="uppercase relative bottom-0 font-medium" onClick={()=>SignIn()}>
-                    Sign-In with Google
+        <div className="max-w-[988px] mx-auto flex-1 w-full h-full flex flex-col lg:flex-row justify-center items-center gap-3">
+                <Button
+                variant="ghost"
+                size="sm"
+                className="z-50 hover:bg-customWhite fixed left-2 text-customWhite top-0 "> 
+                <Link href="/about" >
+                    About
+                </Link>
                 </Button>
-            </div>
+                <h1 className="font-bold text-6xl z-50">
+                    MERLOT
+                </h1>
+                <div className={cn("z-50 px-4 py-3 w-auto flex flex-col gap-y-4 text-lg text-customWhite", inter.className )}>
+                    <div>
+                        <p>Focused on simplicity, authenticity, and mindfulness,</p>
+                        <div className="flex space-x-2">
+                            <p className="font-extrabold">Merlot.</p>
+                            <p>Offering a serene environment where users can connect, and unwind.</p>
+                        </div> 
+                    </div>
+                    <HoverBorderGradient>
+                        <Button 
+                        size="lg" 
+                        disabled={loading}
+                        className={cn("w-[50%] bg-customBlack uppercase relative bottom-0 font-medium", headingFont.className)} 
+                        onClick={()=>SignIn()}>
+                            Sign-In with Google
+                        </Button>
+                    </HoverBorderGradient>
+                </div>
         </div>
     )
 }

@@ -44,6 +44,8 @@ export const PostBox = ({ postId, data, onPostUpdated}) => {
   };
 
   return (
+    <div>
+    <label className="text-neutral-700">Title : {data.title}</label>
     <form onSubmit={handleUpdate} ref={formRef} className="space-y-2">
       <Textarea
         ref={textareaRef}
@@ -65,5 +67,6 @@ export const PostBox = ({ postId, data, onPostUpdated}) => {
         
       </div>
     </form>
+    </div>
   );
 };
